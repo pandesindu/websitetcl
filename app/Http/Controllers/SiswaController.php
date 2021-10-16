@@ -136,14 +136,22 @@ class SiswaController extends Controller
      */
     public function destroy($id)
     {
-        $data = Siswa::find($id);
-        $siswa1 = DetailSiswa::find($id);
-        if ($data != null) {
-            $data = Siswa::where('id', $id)->delete();
-        }
-        if ($siswa1 != null) {
-            $siswa1 = Siswa::where('id', $id)->delete();
-        }
+        // $data = Siswa::find($id);
+        // if ($data != null) {
+        //     $data = Siswa::where('id', $id)->delete();
+        // }
+        // $siswa1 = DetailSiswa::find($id);
+        // if ($siswa1 != null) {
+        //     $siswa1 = DetailSiswa::where('id', $id)->delete();
+        // }
+
+        DB::beginTransaction();
+        Siswa::find($id);
+        DetailSiswa::find($id);
+        Siswa::where('id', $id)->delete();
+        DetailSiswa::where('id', $id)->delete();
+        DB::commit();
+
         return redirect('siswa')->with('success', 'data berhasil di hapus');
     }
 }

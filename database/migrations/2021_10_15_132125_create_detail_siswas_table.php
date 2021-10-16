@@ -14,7 +14,8 @@ class CreateDetailSiswasTable extends Migration
     public function up()
     {
         Schema::create('detail_siswas', function (Blueprint $table) {
-            $table->id('nis');
+            $table->id();
+            $table->integer('nis');
             $table->string('jk_siswa');
             $table->string('ttl_siswa');
             $table->string('alamat_siswa');

@@ -86,14 +86,13 @@ class SiswaController extends Controller
     public function edit($id)
     {
 
-        // DB::beginTransaction();
+        DB::beginTransaction();
         $siswa = Siswa::find($id);
-        dd($siswa);
-        // $siswa1 = DetailSiswa::find($id);
-        // DB::commit();
-        // $kelas = Kelas::all();
-        // $title = 'edit Data siswa';
-        return view('siswa.inputsiswa', compact('siswa'));
+        $siswadetail = DetailSiswa::find($id);
+        DB::commit();
+        $kelas = Kelas::all();
+        $title = 'edit Data siswa';
+        return view('siswa.inputsiswa', compact('siswa', 'title', 'siswadetail', 'kelas'));
     }
 
     /**
@@ -105,7 +104,28 @@ class SiswaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $message = [
+            'required' => 'kolom harus diisi',
+        ];
+        $validasi = $request->validate([
+            'nis' => 'required',
+            'nama_siswa' => 'required|max:255',
+            'kelas_id' => 'required|max:255'
+        ], $message);
+
+        $validasi1 = $request->validate([
+            'nis' => 'required',
+            'jk_siswa' => 'required',
+            'alamat_siswa' => 'required',
+            'ttl_siswa' => 'required',
+            'no_hp' => 'required'
+        ], $message);
+
+        DB::beginTransaction();
+        Siswa::where('id', $id)->update($validasi);
+        DetailSiswa::where('id', $id)->update($validasi1);
+        DB::commit();
+        return redirect('siswa')->with('success', 'data berhasil di simpan');
     }
 
     /**
@@ -116,6 +136,14 @@ class SiswaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = Siswa::find($id);
+        $siswa1 = DetailSiswa::find($id);
+        if ($data != null) {
+            $data = Siswa::where('id', $id)->delete();
+        }
+        if ($siswa1 != null) {
+            $siswa1 = Siswa::where('id', $id)->delete();
+        }
+        return redirect('siswa')->with('success', 'data berhasil di hapus');
     }
 }

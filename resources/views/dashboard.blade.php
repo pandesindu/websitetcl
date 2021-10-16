@@ -4,12 +4,21 @@
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
+    <div class="bg-white p-6">
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <x-jet-welcome />
-            </div>
-        </div>
+        <head>
+            <h1>
+                <b>Sistem Pembayaran SPP Siswa</b>
+            </h1>
+        </head>
+
+        <body>
+            <p>
+                Sistem Informasi Pembayaran SPP (SIP SPP) Merupakan Sebuat Aplikasi Untuk Mengelola Pembayaran Sumbangan Pembinaan Pendidikan (SPP) Yang Dilakukan Oleh Siswa Setiap Semesternya.
+            </p>
+        </body>
+
     </div>
+
+
 </x-template-layout>

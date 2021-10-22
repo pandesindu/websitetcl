@@ -1,14 +1,13 @@
 <x-template-layout>
     <div class="bg-gray-100 overflow-auto py-2 my-4">
-        <h1 class="text-left font-bold uppercase">
+        <h2 class="text-left font-bold uppercase">
             {{$title}}
-        </h1>
+        </h2>
+
     </div>
-
-
     <div class="flex flex-row-reverse mx-2 my-2">
-        <a href="{{route('siswa.create')}}" class="py-2 px-4 border bg-transparent hover:bg-purple-700 border-purple-400 text-sm font-semibold text-purple-700 hover:text-white  rounded">
-            Tambah siswa</a>
+        <a href="{{route('transaksi.create')}}" class="py-2 px-4 border bg-transparent hover:bg-purple-700 border-purple-400 text-sm font-semibold text-purple-700 hover:text-white  rounded">
+            Tambah transaksi</a>
     </div>
 
     <div class="flex flex-col">
@@ -19,42 +18,62 @@
                         <thead class="bg-gray-50">
                             <tr>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    NIS
+                                    waktu transaksi
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    NAMA
+                                    nis
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Kelas
+                                    nama
                                 </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    kelas
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    jumlah pembayaran
+                                </th>
+
                                 <th scope="col" class="relative px-6 py-3">
                                     <span class="sr-only">Edit</span>
                                 </th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
-                            @foreach($siswa as $data)
+                            @foreach($transaksi as $data)
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap">
 
                                     <div class="text-sm font-medium text-gray-900">
-                                        {{$data->nis}}
+                                        {{$data->updated_at}}
                                     </div>
 
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-gray-900">{{$data->nama_siswa}}</div>
+
+                                    <div class="text-sm font-medium text-gray-900">
+                                        {{$data->siswa->nis}}
+                                    </div>
 
                                 </td>
+
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-gray-900">{{$data->kelas->jurusan->nama_jurusan}}</div>
+                                    <div class="text-sm text-gray-900">{{$data->siswa->nama_siswa}}</div>
                                 </td>
+
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">{{$data->siswa->kelas->nama_kelas}}</div>
+                                </td>
+
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">{{$data->jumlah_pembayaran}}</div>
+                                </td>
+
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
 
-                                    <form action="{{route('siswa.destroy', $data->id)}}" method="POST">
+                                    <form action="{{route('transaksi.destroy', $data->id)}}" method="POST">
                                         @csrf
                                         @method('delete')
-                                        <a href="{{route('siswa.edit', $data->id)}}" class="mx-1 py-2 px-4 border bg-transparent hover:bg-purple-700 border-purple-400 text-sm font-semibold text-purple-700 hover:text-white  rounded">Edit </a>
+                                        <a href="{{route('transaksi.edit', $data->id)}}" class="mx-1 py-2 px-4 border bg-transparent hover:bg-purple-700 border-purple-400 text-sm font-semibold text-purple-700 hover:text-white  rounded">Edit </a>
 
                                         <button type="submit" class="bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded">
                                             Delete</button>
@@ -68,5 +87,4 @@
             </div>
         </div>
     </div>
-
 </x-template-layout>

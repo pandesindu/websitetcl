@@ -18,6 +18,7 @@ class SiswaController extends Controller
     public function index()
     {
         $siswa = Siswa::with('kelas')->get();
+
         $title = 'Halaman siswa';
         return view('siswa.SiswaIndex', compact('siswa', 'title'));
     }
@@ -120,6 +121,7 @@ class SiswaController extends Controller
             'ttl_siswa' => 'required',
             'no_hp' => 'required'
         ], $message);
+
 
         DB::beginTransaction();
         Siswa::where('id', $id)->update($validasi);

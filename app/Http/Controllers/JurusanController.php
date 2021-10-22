@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Jurusan;
-use App\Models\Kelas;
 use Illuminate\Http\Request;
 
-class KelasController extends Controller
+class JurusanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,11 +14,9 @@ class KelasController extends Controller
      */
     public function index()
     {
-        $title = 'Datar kelas';
-        $kelas = Kelas::with('jurusan')->get();
-        // dd($kelas);
-
-        return view('kelas.BerandaKelas', compact('title', 'kelas'));
+        $title = 'daftar jurusan';
+        $jurusan = Jurusan::all();
+        return view('jurusan.jurusanindex', compact('title', 'jurusan'));
     }
 
     /**
@@ -29,9 +26,8 @@ class KelasController extends Controller
      */
     public function create()
     {
-        $title = 'input kelas';
-        $jurusan = Jurusan::all();
-        return view('kelas.InputKelas', compact('title', 'jurusan'));
+        $title = 'input jurusan';
+        return view('jurusan.inputjurusan', compact('title'));
     }
 
     /**
@@ -46,12 +42,11 @@ class KelasController extends Controller
             'required' => 'kolom harus diisi',
         ];
         $validasi = $request->validate([
-            'kd_kelas' => 'required|unique:kelas',
-            'nama_kelas' => 'required|max:255',
-            'jurusan_id' => 'required'
+            'kode_jurusan' => 'required|unique:jurusans',
+            'nama_jurusan' => 'required|max:255',
         ], $message);
-        Kelas::create($validasi);
-        return redirect('kelas')->with('success', 'data berhasil di simpan');
+        Jurusan::create($validasi);
+        return redirect('jurusan')->with('success', 'data berhasil di simpan');
     }
 
     /**
@@ -62,7 +57,6 @@ class KelasController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
@@ -73,10 +67,9 @@ class KelasController extends Controller
      */
     public function edit($id)
     {
-        $kelas = Kelas::find($id);
-        $title = 'edit kelas';
-        $jurusan = Jurusan::all();
-        return view('kelas.InputKelas', compact('title', 'kelas', 'jurusan'));
+        $title = 'input jurusan';
+        $jurusan = Jurusan::find($id);
+        return view('jurusan.inputjurusan', compact('title', 'jurusan'));
     }
 
     /**
@@ -92,12 +85,11 @@ class KelasController extends Controller
             'required' => 'kolom harus diisi',
         ];
         $validasi = $request->validate([
-            'kd_kelas' => 'required',
-            'nama_kelas' => 'required|max:255',
-            'jurusan_id' => 'required'
+            'kode_jurusan' => 'required|unique:jurusans',
+            'nama_jurusan' => 'required|max:255',
         ], $message);
-        Kelas::where('id', $id)->update($validasi);
-        return redirect('kelas')->with('success', 'data berhasil di simpan');
+        Jurusan::where('id', $id)->update($validasi);
+        return redirect('jurusan')->with('success', 'data berhasil di simpan');
     }
 
     /**
@@ -108,11 +100,11 @@ class KelasController extends Controller
      */
     public function destroy($id)
     {
-        $kelas = Kelas::find($id);
-        if ($kelas != null) {
-            $kelas = Kelas::where('id', $id)->delete();
+        $jurusan = Jurusan::find($id);
+        if ($jurusan != null) {
+            $jurusan = Jurusan::where('id', $id)->delete();
         }
 
-        return redirect('kelas')->with('success', 'data berhasil di hapus');
+        return redirect('jurusan')->with('success', 'data berhasil di hapus');
     }
 }

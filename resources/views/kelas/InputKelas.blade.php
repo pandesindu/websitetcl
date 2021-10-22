@@ -28,6 +28,24 @@
                     <div class="texs-xs text-red-600">@error('nama_kelas') {{$message}} @enderror</div>
                 </div>
 
+                <div class="relative inline-block w-full text-gray-700">
+                    <label class="block text-sm text-gray-600">Jurusan :</label>
+
+                    <select class="bg-gray-200 w-full h-10 pl-3 pr-6 text-base placeholder-gray-600 border rounded-lg appearance-none focus:shadow-outline @error('jurusan_id') border-red-500 @enderror" name="jurusan_id">
+                        @foreach($jurusan as $data)
+                        <option class="my-2" value="{{$data->id}}">{{$data->nama_jurusan}}</option>
+                        @endforeach
+
+                    </select>
+
+                    <div class="mx-1 absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
+                            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" fill-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <div class="texs-xs text-red-600">@error('jurusan_id') {{$message}} @enderror</div>
+                </div>
+
                 <div class="mt-4">
                     <button class="justify-end px-4 py-1 text-white font-light tracking-wider bg-blue-500 rounded " type="submit">Simpan</button>
                 </div>

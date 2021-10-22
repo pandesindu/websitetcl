@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Siswa extends Model
 {
@@ -12,12 +13,9 @@ class Siswa extends Model
         'nis', 'nama_siswa', 'kelas_id'
     ];
 
+
     public function kelas()
     {
         return $this->belongsTo(Kelas::class);
     }
-    // public function detail()
-    // {
-    //     return $this->belongsTo(DetailSiswa::class);
-    // }
 }

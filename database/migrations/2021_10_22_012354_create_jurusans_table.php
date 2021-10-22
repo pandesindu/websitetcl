@@ -1,11 +1,10 @@
 <?php
 
-use App\Models\DetailSiswa;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSiswasTable extends Migration
+class CreateJurusansTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,11 +13,10 @@ class CreateSiswasTable extends Migration
      */
     public function up()
     {
-        Schema::create('siswas', function (Blueprint $table) {
+        Schema::create('jurusans', function (Blueprint $table) {
             $table->id();
-            $table->integer('nis');
-            $table->foreignId('kelas_id');
-            $table->string('nama_siswa');
+            $table->string('kode_jurusan');
+            $table->string('nama_jurusan');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreateSiswasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('siswas');
+        Schema::dropIfExists('jurusans');
     }
 }

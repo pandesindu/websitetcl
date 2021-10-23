@@ -33,7 +33,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:admin']], function () {
     Route::resource('transaksi', TransaksiController::class);
 });
 
-Route::group(['middleware' => ['auth', 'ceklevel:user']], function () {
+Route::group(['middleware' => ['auth', 'ceklevel:admin, user']], function () {
     // Route::resource('kelas', KelasController::class);
     // Route::resource('siswa', SiswaController::class);
     // Route::resource('jurusan', JurusanController::class);

@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
+use App\Models\DetailSiswa;
 use App\Models\Siswa;
 use App\Models\UjiTransaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
-class TransaksiController extends Controller
+class apiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,11 +18,9 @@ class TransaksiController extends Controller
      */
     public function index()
     {
-        $title = 'halaman pembayaran spp';
-        $transaksi = UjiTransaksi::with('siswa')->get();
-        return view('transaksi.transaksiindex', compact('title', 'transaksi'));
+        $data = Siswa::all();
+        return response()->json($data);
     }
-
 
 
     /**
@@ -31,9 +30,7 @@ class TransaksiController extends Controller
      */
     public function create()
     {
-        $siswa = Siswa::all();
-        $title = 'halaman lakukan transaksi';
-        return view('transaksi.transaksiinput', compact('title', 'siswa'));
+        //
     }
 
     /**
@@ -50,12 +47,24 @@ class TransaksiController extends Controller
         $validasi = $request->validate([
             'siswa_id' => 'required',
             'semester_siswa' => 'required',
-            'jumlah_pembayaran' => 'required'
-        ], $message);
-        $validasi['user_id'] = Auth::id();
+            'jumlah_pembayaran' => 'required', 
 
-        UjiTransaksi::create($validasi);
-        return redirect('transaksi')->with('success', 'data berhasil di simpan');
+        ], $message);
+        // $validasi['user_id'] = Auth::id();
+
+        try {
+            $response = UjiTransaksi::create($validasi);
+            return response()->json([
+                'success'=> true,
+                'message'=>'success',
+                'data'=>$response
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message'=> 'error',
+                'error'=>$e->getMessage()
+            ]);
+        }
     }
 
     /**
@@ -64,8 +73,12 @@ class TransaksiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+     //show digunakan  untuk get data by nis 
     public function show($id)
     {
+        $data = Siswa::where('nis', $id)->get();
+        return response()->json($data, $status = 200);
     }
 
     /**
@@ -76,10 +89,7 @@ class TransaksiController extends Controller
      */
     public function edit($id)
     {
-        $transaksi = UjiTransaksi::find($id);
-        $siswa = Siswa::all();
-        $title = 'halaman edit transaksi';
-        return view('transaksi.transaksiinput', compact('title', 'siswa', 'transaksi'));
+        //
     }
 
     /**
@@ -91,18 +101,7 @@ class TransaksiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $message = [
-            'required' => 'kolom harus diisi',
-        ];
-        $validasi = $request->validate([
-            'siswa_id' => 'required',
-            'semester_siswa' => 'required',
-            'jumlah_pembayaran' => 'required'
-        ], $message);
-        $validasi['user_id'] = Auth::id();
-
-        UjiTransaksi::where('id', $id)->update($validasi);
-        return redirect('transaksi')->with('success', 'data berhasil di simpan');
+        //
     }
 
     /**
@@ -113,11 +112,6 @@ class TransaksiController extends Controller
      */
     public function destroy($id)
     {
-        $transaksi = UjiTransaksi::find($id);
-        if ($transaksi != null) {
-            $transaksi = UjiTransaksi::where('id', $id)->delete();
-        }
-
-        return redirect('transaksi')->with('success', 'data berhasil di hapus');
+        //
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\apiController;
 use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\SiswaController;
@@ -40,5 +41,5 @@ Route::group(['middleware' => ['auth', 'ceklevel:user']], function () {
     Route::resource('transaksi', TransaksiController::class);
 });
 
-
-// Route::get('/cari', [TransaksiController::class, 'ambilData']);
+// Route::get('test/{$id}', [apiController::class, 'getSiswaById']);
+// // Route::get('/cari', [TransaksiController::class, 'ambilData']);

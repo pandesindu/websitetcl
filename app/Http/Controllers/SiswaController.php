@@ -6,6 +6,7 @@ use App\Models\DetailSiswa;
 use App\Models\Kelas;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class SiswaController extends Controller
@@ -17,10 +18,21 @@ class SiswaController extends Controller
      */
     public function index()
     {
-        $siswa = Siswa::with('kelas')->get();
+        $userID = Auth()->id();
+        // $dataSiswa = DB::table('siswas')->where('user_id', $userID)->get();
+        $siswa = Siswa::with('kelas')->where('user_id', $userID)->get();
+        $detailSiswa = $users = DB::table('detail_siswas')->where('user_id', $userID)->get();
 
-        $title = 'Halaman siswa';
-        return view('siswa.SiswaIndex', compact('siswa', 'title'));
+        $title = 'Halaman profil';
+        return view('siswa.ProfilSiswa', compact('siswa', 'title', 'detailSiswa'));
+        // compact('siswa', 'title')
+    }
+
+    public function adminIndex()
+    {
+        $title = 'Halaman data siswa';
+        $siswa = Siswa::with('kelas')->get();
+        return view('siswa.Siswaindex', compact('title', 'siswa'));
     }
 
     /**
@@ -32,7 +44,9 @@ class SiswaController extends Controller
     {
         $kelas = Kelas::all();
         $title = 'Tambah Data siswa';
-        return view('siswa.inputsiswa', compact('kelas', 'title'));
+        $user_id = Auth()->id();
+        // dd($user_id);
+        return view('siswa.inputsiswa', compact('kelas', 'title', 'user_id'));
     }
 
     /**
@@ -49,7 +63,8 @@ class SiswaController extends Controller
         $validasi = $request->validate([
             'nis' => 'required|unique:siswas',
             'nama_siswa' => 'required|max:255',
-            'kelas_id' => 'required|max:255'
+            'kelas_id' => 'required|max:255',
+            'user_id' => 'required|max:255'
         ], $message);
 
         $validasi1 = $request->validate([
@@ -57,7 +72,8 @@ class SiswaController extends Controller
             'jk_siswa' => 'required',
             'alamat_siswa' => 'required',
             'ttl_siswa' => 'required',
-            'no_hp' => 'required'
+            'no_hp' => 'required', 
+            'user_id' => 'required'
         ], $message);
 
         DB::beginTransaction();
@@ -92,8 +108,9 @@ class SiswaController extends Controller
         $siswadetail = DetailSiswa::find($id);
         DB::commit();
         $kelas = Kelas::all();
+        $user_id = Auth()->id();
         $title = 'edit Data siswa';
-        return view('siswa.inputsiswa', compact('siswa', 'title', 'siswadetail', 'kelas'));
+        return view('siswa.inputsiswa', compact('siswa', 'title', 'siswadetail', 'kelas', 'user_id'));
     }
 
     /**
@@ -111,7 +128,8 @@ class SiswaController extends Controller
         $validasi = $request->validate([
             'nis' => 'required',
             'nama_siswa' => 'required|max:255',
-            'kelas_id' => 'required|max:255'
+            'kelas_id' => 'required|max:255',
+            'user_id' => 'required|max:255'
         ], $message);
 
         $validasi1 = $request->validate([

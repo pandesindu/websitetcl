@@ -9,7 +9,7 @@ class DetailSiswa extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'nis', 'jk_siswa', 'alamat_siswa', 'ttl_siswa', 'no_hp'
+        'nis','user_id', 'jk_siswa', 'alamat_siswa', 'ttl_siswa', 'no_hp'
     ];
 
     // public function siswa()

@@ -15,6 +15,7 @@ class CreateUjiTransaksisTable extends Migration
     {
         Schema::create('uji_transaksis', function (Blueprint $table) {
             $table->id();
+            $table->integer('kode');
             $table->foreignId('user_id');
             $table->foreignId('siswa_id');
             $table->string('semester_siswa');

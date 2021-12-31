@@ -6,10 +6,7 @@
     </div>
 
 
-    {{-- <div class="flex flex-row-reverse mx-2 my-2">
-        <a href="{{route('siswa.create')}}" class="py-2 px-4 border bg-transparent hover:bg-purple-700 border-purple-400 text-sm font-semibold text-purple-700 hover:text-white  rounded">
-            Tambah siswa</a>
-    </div> --}}
+  
 
     <div class="flex flex-col">
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">

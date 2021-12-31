@@ -7,25 +7,39 @@
           <h3 class="text-lg leading-6 font-medium text-gray-900">
             {{$title}}
           </h3>
-          <div class="bg-white overflow-hidden flex float-right"> 
-          @foreach ($siswa as $data)
-          <form action="{{route('siswa.destroy', $data->id)}}" method="POST">
-            @csrf
-            @method('delete')
-            <a href="{{route('siswa.edit', $data->id)}}" class="mx-1 py-2 px-5 border bg-transparent hover:bg-purple-700 border-purple-400 text-sm font-semibold text-purple-700 hover:text-white  rounded">Edit </a>
 
-            <button type="submit" class="bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded">
-                Delete</button>
-        </form>
-        @endforeach
-      </div>
+          @if(empty($siswa[0]))
+            <div class="bg-white overflow-hidden flex float-right">
+              <a href="{{route('siswa.create')}}" class="py-2 px-4 border bg-transparent hover:bg-purple-700 border-purple-400 text-sm font-semibold text-purple-700 hover:text-white  rounded">
+                  Tambah siswa</a>
+            </div>
+          @endif
+
+                <div class="bg-white overflow-hidden flex float-right"> 
+                      @foreach ($siswa as $data)
+                      <form action="{{route('siswa.destroy', $data->id)}}" method="POST">
+                        @csrf
+                        @method('delete')
+                        <a href="{{route('siswa.edit', $data->id)}}" class="mx-1 py-2 px-5 border bg-transparent hover:bg-purple-700 border-purple-400 text-sm font-semibold text-purple-700 hover:text-white  rounded">Edit </a>
+
+                        <button type="submit" class="bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded">
+                            Delete</button>
+                    </form>
+                  
+                    
+                    @endforeach
+              </div>
+
+         
+        
+
+         
           <p class="mt-1 max-w-2xl text-sm text-gray-500">
             halaman personal data siswa
           </p>
         </div>
         <div class="border-t border-gray-200">
           @foreach ($siswa as $item)
-              
           <dl>
             <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt class="text-sm font-medium text-gray-500">

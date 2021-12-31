@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Http;
 use App\Models\Siswa;
 use App\Models\UjiTransaksi;
+use Error;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -18,8 +19,13 @@ class TransaksiController extends Controller
     public function index()
     {
         $title = 'halaman pembayaran spp';
-        $transaksi = UjiTransaksi::with('siswa')->get();
-        return view('transaksi.transaksiindex', compact('title', 'transaksi'));
+        $UserID = Auth()->id();
+        // dd($iduser);
+        $transaksi = Http::get('http://localhost:3000/transaction/user/'.$UserID);
+        $res = json_decode($transaksi);
+        
+        
+        return view('transaksi.transaksiindex', compact('res', 'title'));
     }
 
 
@@ -31,7 +37,8 @@ class TransaksiController extends Controller
      */
     public function create()
     {
-        $siswa = Siswa::all();
+        $userid = Auth()->id();
+        $siswa = Siswa::with('kelas')->where('user_id', $userid)->get();
         $title = 'halaman lakukan transaksi';
         return view('transaksi.transaksiinput', compact('title', 'siswa'));
     }
@@ -44,17 +51,22 @@ class TransaksiController extends Controller
      */
     public function store(Request $request)
     {
+        
+        $kode = random_int(10000, 99999);
         $message = [
             'required' => 'kolom harus diisi',
         ];
         $validasi = $request->validate([
-            'siswa_id' => 'required',
-            'semester_siswa' => 'required',
-            'jumlah_pembayaran' => 'required'
+            'StatusTransaksi'=>'required',
+            'NamaSiswa' => 'required',
+            'NisSiswa' => 'required',
+            'JumlahTransaksi' => 'required',
+           
         ], $message);
-        $validasi['user_id'] = Auth::id();
+        $validasi['UserID'] = Auth::id();
+        $validasi['KodeTransaksi'] = $kode;
 
-        UjiTransaksi::create($validasi);
+        $post = Http::post('http://localhost:3000/transaction', $validasi);
         return redirect('transaksi')->with('success', 'data berhasil di simpan');
     }
 
@@ -76,10 +88,17 @@ class TransaksiController extends Controller
      */
     public function edit($id)
     {
-        $transaksi = UjiTransaksi::find($id);
-        $siswa = Siswa::all();
+      
+        $userid = Auth()->id();
+        $siswa = Siswa::with('kelas')->where('user_id', $userid)->get();
+        $req = Http::get('http://localhost:3000/transaction/'.$id);
+        $transaksi = json_decode($req);
         $title = 'halaman edit transaksi';
-        return view('transaksi.transaksiinput', compact('title', 'siswa', 'transaksi'));
+        return view('transaksi.updateTransaksi', [
+            'title'=> $title,
+            'transaksi' => $transaksi, 
+            'siswa' => $siswa
+        ]);
     }
 
     /**
@@ -91,17 +110,23 @@ class TransaksiController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
+        $kode = random_int(10000, 99999);
         $message = [
             'required' => 'kolom harus diisi',
         ];
         $validasi = $request->validate([
-            'siswa_id' => 'required',
-            'semester_siswa' => 'required',
-            'jumlah_pembayaran' => 'required'
+            'StatusTransaksi'=>'required',
+            'NamaSiswa' => 'required',
+            'NisSiswa' => 'required',
+            'JumlahTransaksi' => 'required',
+            
         ], $message);
-        $validasi['user_id'] = Auth::id();
+        $validasi['UserID'] = Auth::id();
+        $validasi['KodeTransaksi'] = $kode;
 
-        UjiTransaksi::where('id', $id)->update($validasi);
+        $post = Http::patch('http://localhost:3000/transaction/'.$id, $validasi);
+
         return redirect('transaksi')->with('success', 'data berhasil di simpan');
     }
 
@@ -113,11 +138,12 @@ class TransaksiController extends Controller
      */
     public function destroy($id)
     {
-        $transaksi = UjiTransaksi::find($id);
-        if ($transaksi != null) {
-            $transaksi = UjiTransaksi::where('id', $id)->delete();
-        }
+       
+        $post = Http::patch('http://localhost:3000/transaction/'.$id, [
+            'StatusTransaksi' => 'dibatalkan'
+        ]);
+        // return $post->json();
 
-        return redirect('transaksi')->with('success', 'data berhasil di hapus');
+        return redirect('transaksi');
     }
 }

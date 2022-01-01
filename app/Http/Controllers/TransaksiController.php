@@ -77,7 +77,7 @@ class TransaksiController extends Controller
         $validasi['KodeTransaksi'] = $kode;
 
         $post = Http::post('http://localhost:3000/transaction', $validasi);
-        return redirect('transaksi')->with('success', 'data berhasil di simpan');
+        return redirect('transaksi')->with('success', 'transaksi berhasil dibuat');
     }
 
     /**
@@ -88,6 +88,29 @@ class TransaksiController extends Controller
      */
     public function show($id)
     {
+     
+            $post = Http::patch('http://localhost:3000/transaction/'.$id, [
+                'StatusTransaksi' => 'dibatalkan'
+            ]);
+        
+            return redirect('transaksi')->with('warning', 'transaksi dibatalkan');
+        
+    
+    }
+
+    public function batalkanTransaksi($id)
+    {
+        try {
+            $post = Http::patch('http://localhost:3000/transaction/'.$id, [
+                'StatusTransaksi' => 'dibatalkan'
+            ]);
+        } catch (error) {
+            return redirect('transaksi')->with('error', 'transaksi dibatalkan');
+        }
+        
+        
+
+        return redirect('transaksi')->with('warning', 'transaksi dibatalkan');
     }
 
     /**
@@ -137,7 +160,7 @@ class TransaksiController extends Controller
 
         $post = Http::patch('http://localhost:3000/transaction/'.$id, $validasi);
 
-        return redirect('transaksi')->with('success', 'data berhasil di simpan');
+        return redirect('transaksi')->with('success', 'transaksi diperbaharui');
     }
 
     /**
@@ -148,23 +171,18 @@ class TransaksiController extends Controller
      */
     public function destroy($id)
     {
-       
-        $post = Http::patch('http://localhost:3000/transaction/'.$id, [
-            'StatusTransaksi' => 'dibatalkan'
-        ]);
+      
+        try {
+            $post = Http::patch('http://localhost:3000/transaction/'.$id, [
+                'StatusTransaksi' => 'dibatalkan'
+            ]);
+        } catch (error) {
+            return redirect('transaksi')->with('error', 'transaksi dibatalkan');
+        }
+        
+        
 
-        return redirect('transaksi');
-    }
-
-    public function confirm($id)
-    {
-       dd($id);
-        $post = Http::patch('http://localhost:3000/transaction/'.$id, [
-            'StatusTransaksi' => 'transaksi berhasil'
-        ]);
-        return $post->json();
-
-        return redirect('transaksi');
+        return redirect('transaksi')->with('warning', 'transaksi dibatalkan');
     }
 
 

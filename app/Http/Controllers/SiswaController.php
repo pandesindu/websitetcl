@@ -80,7 +80,7 @@ class SiswaController extends Controller
         Siswa::create($validasi);
         DetailSiswa::create($validasi1);
         DB::commit();
-        return redirect('siswa')->with('success', 'data berhasil di simpan');
+        return redirect('siswa')->with('success', 'data berhasil ditambahkan');
     }
 
     /**
@@ -145,7 +145,7 @@ class SiswaController extends Controller
         Siswa::where('id', $id)->update($validasi);
         DetailSiswa::where('id', $id)->update($validasi1);
         DB::commit();
-        return redirect('siswa')->with('success', 'data berhasil di simpan');
+        return redirect('siswa')->with('success', 'data berhasil diperbaharui');
     }
 
     /**
@@ -172,6 +172,6 @@ class SiswaController extends Controller
         DetailSiswa::where('id', $id)->delete();
         DB::commit();
 
-        return redirect('siswa')->with('success', 'data berhasil di hapus');
+        return redirect('siswa')->with('success', 'data terhapus');
     }
 }

@@ -70,8 +70,7 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                  @if ($data->StatusTransaksi == "belum dibayar")
-                                    
-                                    
+
                                         <form action="{{route('transaksi.destroy', $data->_id)}}" method="POST">
                                             @csrf
                                             @method('delete')
@@ -80,9 +79,6 @@
                                             <button type="submit" class="bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded">
                                                 Batalkan</button>
                                         </form>
-                                    
-                                
-                                    
                                 @endif
                             </td>
                                     

@@ -61,9 +61,10 @@
 
         <!-- Mobile Header & Nav -->
         @include('layouts.template.dropdownNavbar')
-
+        
         <div class="w-full overflow-x-hidden border-t flex flex-col">
             <main class="w-full flex-grow p-6">
+                @include('layouts.template.flash-message')
                 {{$slot}}
             </main>
 

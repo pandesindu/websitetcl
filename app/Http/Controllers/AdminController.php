@@ -85,7 +85,7 @@ class AdminController extends Controller
             'StatusTransaksi' => 'transaksi sukses'
         ]);
 
-        return redirect('/TransaksiSiswa');
+        return redirect('/TransaksiSiswa')->with('success', 'transaksi dikonfirmasi');
     }
     
 }

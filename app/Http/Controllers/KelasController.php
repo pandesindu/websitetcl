@@ -51,7 +51,7 @@ class KelasController extends Controller
             'jurusan_id' => 'required'
         ], $message);
         Kelas::create($validasi);
-        return redirect('kelas')->with('success', 'data berhasil di simpan');
+        return redirect('kelas')->with('success', 'data berhasil ditambahkan');
     }
 
     /**
@@ -97,7 +97,7 @@ class KelasController extends Controller
             'jurusan_id' => 'required'
         ], $message);
         Kelas::where('id', $id)->update($validasi);
-        return redirect('kelas')->with('success', 'data berhasil di simpan');
+        return redirect('kelas')->with('success', 'data berhasil diperbaharui');
     }
 
     /**
@@ -113,6 +113,6 @@ class KelasController extends Controller
             $kelas = Kelas::where('id', $id)->delete();
         }
 
-        return redirect('kelas')->with('success', 'data berhasil di hapus');
+        return redirect('kelas')->with('success', 'data terhapus');
     }
 }

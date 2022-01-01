@@ -46,7 +46,7 @@ class JurusanController extends Controller
             'nama_jurusan' => 'required|max:255',
         ], $message);
         Jurusan::create($validasi);
-        return redirect('jurusan')->with('success', 'data berhasil di simpan');
+        return redirect('jurusan')->with('success', 'data berhasil ditambahkan');
     }
 
     /**
@@ -89,7 +89,7 @@ class JurusanController extends Controller
             'nama_jurusan' => 'required|max:255',
         ], $message);
         Jurusan::where('id', $id)->update($validasi);
-        return redirect('jurusan')->with('success', 'data berhasil di simpan');
+        return redirect('jurusan')->with('success', 'data berhasil diperbaharui');
     }
 
     /**
@@ -105,6 +105,6 @@ class JurusanController extends Controller
             $jurusan = Jurusan::where('id', $id)->delete();
         }
 
-        return redirect('jurusan')->with('success', 'data berhasil di hapus');
+        return redirect('jurusan')->with('success', 'data data terhapus');
     }
 }

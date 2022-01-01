@@ -5,10 +5,10 @@
         </h2>
 
     </div>
-    <div class="flex flex-row-reverse mx-2 my-2">
+    {{-- <div class="flex flex-row-reverse mx-2 my-2">
         <a href="{{route('transaksi.create')}}" class="py-2 px-4 border bg-transparent hover:bg-purple-700 border-purple-400 text-sm font-semibold text-purple-700 hover:text-white  rounded">
             Tambah transaksi</a>
-    </div>
+    </div> --}}
     <div class="flex flex-col">
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -70,15 +70,15 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                  @if ($data->StatusTransaksi == "belum dibayar")
-
-                                        <form action="{{route('transaksi.destroy', $data->_id)}}" method="POST">
+                                        <form action="{{route('admin.destroy', $data->_id)}}" method="POST">
                                             @csrf
                                             @method('delete')
-                                            <a href="{{route('transaksi.edit', $data->_id)}}" class="mx-1 py-2 px-4 border bg-transparent hover:bg-purple-700 border-purple-400 text-sm font-semibold text-purple-700 hover:text-white  rounded">Edit </a>
-    
                                             <button type="submit" class="bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded">
                                                 Batalkan</button>
                                         </form>
+                                    
+                                
+                                    
                                 @endif
                             </td>
                                     

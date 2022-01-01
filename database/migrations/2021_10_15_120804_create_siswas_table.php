@@ -18,6 +18,7 @@ class CreateSiswasTable extends Migration
             $table->id();
             $table->integer('nis');
             $table->foreignId('kelas_id');
+            $table->foreignId('user_id');
             $table->string('nama_siswa');
             $table->timestamps();
         });

@@ -17,6 +17,12 @@
                 @method('PUT')
                 @endif
                 <div class="my-2">
+
+                    {{-- <label class="block text-sm text-gray-600">user id</label> --}}
+                    <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded @error('user_id') border-red-500 @enderror" name="user_id" type="hidden" placeholder="" aria-label="Name" value="{{$user_id}}">
+                    {{-- <div class="texs-xs text-red-600">@error('nis') {{$message}} @enderror</div>  --}}
+                </div>
+                <div class="my-2">
                     <label class="block text-sm text-gray-600">NIS :</label>
                     <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded @error('nis') border-red-500 @enderror" name="nis" type="number" placeholder="" aria-label="Name" value="{{(isset($siswa))?$siswa->nis:old('nis')}}">
                     <div class="texs-xs text-red-600">@error('nis') {{$message}} @enderror</div>

@@ -14,13 +14,10 @@
         <div class="leading-loose">
             
             
-            <form class="p-10 bg-white rounded shadow-xl" action="{{(isset($transaksi))?route('transaksi.update', $transaksi->_id):route('transaksi.store')}}" method="POST">
-              
-
+            <form class="p-10 bg-white rounded shadow-xl" action="{{route('transaksi.update', $transaksi->_id)}}" method="POST">
                 @csrf
-                @if(isset($transaksi))
-                @method('PUT')
-                @endif
+                @method('PATCH')
+                
 
                 
                 <div class="my-2">

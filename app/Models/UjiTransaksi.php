@@ -10,7 +10,7 @@ class UjiTransaksi extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'siswa_id', 'semester_siswa', 'jumlah_pembayaran'
+        'user_id', 'siswa_id', 'semester_siswa', 'jumlah_pembayaran', 'kode'
     ];
 
     public function siswa()

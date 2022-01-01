@@ -36,11 +36,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:admin']], function () {
     Route::resource('jurusan', JurusanController::class);
 });
 
-Route::group(['middleware' => ['auth', 'ceklevel:user']], function () {
-    Route::resource('siswa', SiswaController::class);
-    Route::resource('transaksi', TransaksiController::class);
-    Route::get('/transaksi/batal/{id}', [TransaksiController::class, 'batalkanTransaksi'])->name('transaksi.cancel');
-});
+
 
 // Route::get('test/{$id}', [apiController::class, 'getSiswaById']);
 // // Route::get('/cari', [TransaksiController::class, 'ambilData']);

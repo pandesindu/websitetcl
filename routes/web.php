@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\API\apiController;
 use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\KelasController;
@@ -29,6 +30,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 
 Route::group(['middleware' => ['auth', 'ceklevel:admin']], function () {
     Route::get('/datasiswa', [SiswaController::class, 'adminIndex']);
+    Route::get('/TransaksiSiswa', [TransaksiController::class, 'adminIndex']);
+    Route::resource('admin', AdminController::class);
     Route::resource('kelas', KelasController::class);
     Route::resource('jurusan', JurusanController::class);
 });

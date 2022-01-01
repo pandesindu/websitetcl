@@ -29,6 +29,16 @@ class TransaksiController extends Controller
     }
 
 
+    public function adminIndex()
+    {
+        $title = 'Halaman Transaksi Siswa'; 
+        // dd($iduser);
+        $transaksi = Http::get('http://localhost:3000/transaction');
+        $res = json_decode($transaksi);
+        return view('transaksi.transaksiAdmin', compact('res', 'title'));
+    }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -142,8 +152,20 @@ class TransaksiController extends Controller
         $post = Http::patch('http://localhost:3000/transaction/'.$id, [
             'StatusTransaksi' => 'dibatalkan'
         ]);
-        // return $post->json();
 
         return redirect('transaksi');
     }
+
+    public function confirm($id)
+    {
+       dd($id);
+        $post = Http::patch('http://localhost:3000/transaction/'.$id, [
+            'StatusTransaksi' => 'transaksi berhasil'
+        ]);
+        return $post->json();
+
+        return redirect('transaksi');
+    }
+
+
 }
